@@ -1,0 +1,81 @@
+{
+  "description": "绿盟NF防火墙批量操作模板",
+  "operations": [
+    {
+      "comment": "示例1: 添加静态路由",
+      "method": "POST",
+      "endpoint": "/route/static/routes",
+      "data": {
+        "destination": "192.168.100.0/24",
+        "gateway": "192.168.1.254",
+        "interface": "eth1"
+      }
+    },
+    {
+      "comment": "示例2: 添加地址对象",
+      "method": "POST",
+      "endpoint": "/objects/addresses",
+      "data": {
+        "name": "内网网段",
+        "type": "network",
+        "value": "192.168.1.0/24"
+      }
+    },
+    {
+      "comment": "示例3: 添加NAT策略",
+      "method": "POST",
+      "endpoint": "/policy/nat/policies",
+      "data": {
+        "name": "内网访问NAT",
+        "source": "192.168.1.0/24",
+        "source_interface": "eth1",
+        "destination": "any",
+        "service": "any",
+        "action": "source-nat",
+        "translated_address": "eth0"
+      }
+    },
+    {
+      "comment": "示例4: 添加访问控制策略",
+      "method": "POST",
+      "endpoint": "/policy/acl/policies",
+      "data": {
+        "name": "允许内网访问互联网",
+        "source": "192.168.1.0/24",
+        "destination": "any",
+        "service": "any",
+        "action": "accept",
+        "log": "enable"
+      }
+    },
+    {
+      "comment": "示例5: 添加服务对象",
+      "method": "POST",
+      "endpoint": "/objects/services",
+      "data": {
+        "name": "Web服务",
+        "protocol": "tcp",
+        "destination_port": "80,443"
+      }
+    },
+    {
+      "comment": "示例6: Ping测试",
+      "method": "POST",
+      "endpoint": "/diagnostics/ping",
+      "data": {
+        "host": "192.168.1.1",
+        "count": 4
+      }
+    },
+    {
+      "comment": "示例7: 查询接口状态",
+      "method": "GET",
+      "endpoint": "/interface/interfaces"
+    },
+    {
+      "comment": "示例8: 查询所有路由",
+      "method": "GET",
+      "endpoint": "/route/static/routes"
+    }
+  ]
+}

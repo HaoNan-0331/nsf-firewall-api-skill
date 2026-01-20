@@ -1,0 +1,64 @@
+# 绿盟NF防火墙批量操作模板 (YAML格式)
+# 使用方法: python nsf_batch_operations.py <host> <token> batch_template.yaml
+
+# 操作1: 添加静态路由
+- method: POST
+  endpoint: /route/static/routes
+  data:
+    destination: "192.168.100.0/24"
+    gateway: "192.168.1.254"
+    interface: "eth1"
+
+# 操作2: 添加地址对象
+- method: POST
+  endpoint: /objects/addresses
+  data:
+    name: "内网网段"
+    type: "network"
+    value: "192.168.1.0/24"
+
+# 操作3: 添加服务对象
+- method: POST
+  endpoint: /objects/services
+  data:
+    name: "Web服务"
+    protocol: "tcp"
+    destination_port: "80,443"
+
+# 操作4: 添加NAT策略
+- method: POST
+  endpoint: /policy/nat/policies
+  data:
+    name: "内网访问NAT"
+    source: "192.168.1.0/24"
+    source_interface: "eth1"
+    destination: "any"
+    service: "any"
+    action: "source-nat"
+    translated_address: "eth0"
+
+# 操作5: 添加访问控制策略
+- method: POST
+  endpoint: /policy/acl/policies
+  data:
+    name: "允许内网访问互联网"
+    source: "192.168.1.0/24"
+    destination: "any"
+    service: "any"
+    action: "accept"
+    log: "enable"
+
+# 操作6: Ping测试
+- method: POST
+  endpoint: /diagnostics/ping
+  data:
+    host: "192.168.1.1"
+    count: 4
+
+# 操作7: 查询接口状态
+- method: GET
+  endpoint: /interface/interfaces
+
+# 操作8: 查询所有策略
+- method: GET
+  endpoint: /policy/acl/policies

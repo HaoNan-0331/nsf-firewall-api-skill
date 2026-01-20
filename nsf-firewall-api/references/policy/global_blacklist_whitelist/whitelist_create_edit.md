@@ -1,0 +1,67 @@
+# 6.2.10 新建/编辑白名单
+
+## 简要描述
+新建或编辑白名单。
+
+## 请求URL
+```
+POST https://{{host}}/north/nf/strategy/globalWb/wlist/configuration/
+```
+
+## 请求方式
+```
+POST
+```
+
+## 请求参数
+| 字段名 | 必选 | 类型 | 说明 |
+|--------|------|------|------|
+| id | 否 | string | 对象ID（action='edit'时必填） |
+| action | 是 | string | 新建/编辑：create(新建)/edit(编辑) |
+| ip | 否 | string | IP地址（objectType=ip时必填） |
+| type | 是 | string | 类型：sourceIp(源地址)/destIp(目的地址)，编辑时不可修改 |
+| protocol | 是 | string | 协议：any/TCP/UDP/ICMP/IP |
+| port | 否 | string | 端口：any或1-65535 |
+| objectType | 是 | string | 对象类型：ip(ip地址)/object(对象)，ipv6时只能为ip |
+| zone | 否 | string | 地理对象ID（objectType='object'时必填，长度≤526） |
+| ipv6 | 否 | string | ipv6类型：true(ipv6)/false(ipv4)，默认ipv4 |
+| status | 否 | boolean | 启用状态：True(开启)/False(关闭) |
+
+## 请求示例
+```bash
+curl -X POST "https://{{host}}/north/nf/strategy/globalWb/wlist/configuration/" \
+  -H "Authorization: <your-token>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "sourceIp",
+    "ip": "23.23.23.23",
+    "objectType": "ip",
+    "protocol": "any",
+    "port": "any",
+    "source": "user",
+    "action": "create"
+  }'
+```
+
+## 成功返回示例
+```json
+{
+  "status": 2000,
+  "module": "NF",
+  "message": "新建白名单 [23.23.23.28] 成功",
+  "result": {}
+}
+```
+
+## 失败返回示例
+```json
+{
+  "status": 8204,
+  "module": "NF",
+  "message": "范围不合规: action参数值有误"
+}
+```
+
+## 使用场景
+- 添加IP地址到白名单
+- 编辑已有白名单规则
