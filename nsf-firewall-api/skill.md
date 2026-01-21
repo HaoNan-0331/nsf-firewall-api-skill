@@ -60,7 +60,7 @@ Content-Type: application/json
 
 ```
 请提供以下信息：
-1. 防火墙地址 (例如: https://183.67.91.142:8081)
+1. 防火墙地址 (例如: https://192.168.1.1:8081)
 2. API Token (从Web界面生成)
 ```
 
