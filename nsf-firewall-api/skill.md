@@ -43,7 +43,7 @@ description: 绿盟NF防火墙REST API管理技能。此技能应在需要对绿
 - **prefix**: 固定为 `/north/nf`
 - **resource**: 资源路径（如 `strategy/firewall/info/`）
 
-**示例**: `https://183.67.91.142:8081/north/nf/strategy/firewall/info/`
+**示例**: `https://192.168.1.1:8081/north/nf/strategy/firewall/info/`
 
 ### 请求头设置
 
